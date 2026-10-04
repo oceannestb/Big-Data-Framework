@@ -1,7 +1,7 @@
 [project]
-name = "oce-repo"
+name = "big-data-framework"
 version = "0.1.0"
-description = "Add your description here"
+description = "Big Data Framework dataset generator lab"
 readme = "README.md"
 authors = [
     { name = "o-sitbon-ece", email = "oceanne.sitbon@edu.ece.fr" }
@@ -12,7 +12,8 @@ dependencies = [
 ]
 
 [project.scripts]
-oce-repo = "oce_repo:main"
+dataset-users = "big_data_framework.dataset_users:main"
+dataset-orders = "big_data_framework.dataset_orders:main"
 
 [build-system]
 requires = ["uv_build>=0.12.10,<0.13.0"]

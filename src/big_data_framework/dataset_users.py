@@ -1,38 +1,30 @@
 import argparse
-
 from faker import Faker
-
 from .serialize import serialize
 
 fake = Faker()
-# Generate the same dataset on every execution
-Faker.seed(42)
+fake.seed_instance(0)
 
-
-def users_generate(count=50, output=""):
+def users_generate(count):
     users = []
     for _ in range(count):
-        user = {"uuid": fake.uuid4(), **fake.simple_profile()}
-        users.append(user)
-    serialize(users, output)
+        users.append({
+            "uuid": fake.uuid4(),
+            "username": fake.user_name(),
+            "name": fake.name(),
+            "address": fake.address().replace("\n", ", "),
+            "email": fake.email(),
+        })
     return users
 
-
 def main():
-    parser = argparse.ArgumentParser(prog="dataset-users", description="Users generator")
-    parser.add_argument(
-        "-c", "--count", help="Number of users to generate.", type=int, default=50
-    )
-    parser.add_argument(
-        "-o",
-        "--output",
-        help="Output format.",
-        default="json",
-        choices=["csv", "json", "jsonline"],
-    )
+    parser = argparse.ArgumentParser(description="Users generator")
+    parser.add_argument("-c", "--count", type=int, default=10, help="Number of users to generate.")
+    parser.add_argument("-o", "--output", choices=["csv", "json", "jsonline"], default="json", help="Output format.")
     args = parser.parse_args()
-    users_generate(args.count, args.output)
 
+    users = users_generate(args.count)
+    serialize(users, args.output)
 
 if __name__ == "__main__":
     main()
