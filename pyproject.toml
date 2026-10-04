@@ -7,7 +7,9 @@ authors = [
     { name = "o-sitbon-ece", email = "oceanne.sitbon@edu.ece.fr" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "faker>=40.37.0",
+]
 
 [project.scripts]
 oce-repo = "oce_repo:main"
