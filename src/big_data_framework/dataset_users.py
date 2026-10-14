@@ -4,6 +4,9 @@ from .serialize import serialize
 
 fake = Faker()
 fake.seed_instance(0)
+# Separate generator: adding birthdate must not change the other fields
+fake_birth = Faker()
+fake_birth.seed_instance(1)
 
 def users_generate(count):
     users = []
@@ -12,6 +15,7 @@ def users_generate(count):
             "uuid": fake.uuid4(),
             "username": fake.user_name(),
             "name": fake.name(),
+            "birthdate": fake_birth.date_of_birth(minimum_age=0, maximum_age=100).isoformat(),
             "address": fake.address().replace("\n", ", "),
             "email": fake.email(),
         })
